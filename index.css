@@ -1,0 +1,64 @@
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .container {
+    left: 5%;
+    top: 5%;
+    min-width: 90%;
+    min-height: 90%;
+  }  
+}
+@media only screen and (min-width: 769px) {
+  .container {
+    left: 25%;
+    top: 25%;
+    min-width: 50%;
+    min-height: 50%;
+  }
+}
+
+.container {
+  border: solid 1px #000000;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+}
+
+.data {
+  display: inline-block;
+  text-align: left;
+  padding: 20px 80px 20px 80px;
+}
+
+.data label {
+  font-weight: bold;
+}
+
+.data input {
+  float: right;
+}
+
+.data .row {
+  clear: both;
+}
+
+.data .form button {
+  margin-top: 2em;
+  display: inline;
+  background-color: #3B64CE;
+  border: 1px solid #3B64CE;
+  color: #FFF;
+  min-width: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 2px #000000;
+}
+
+.data .form button:hover {
+  background-color: #504869;
+  border: 1px solid #504869;
+}
+
+.data .form button:active {
+  background-color: #504869;
+  border: 1px solid #504869;
+  box-shadow: 1.5px 1.5px 2px #808080;
+}
