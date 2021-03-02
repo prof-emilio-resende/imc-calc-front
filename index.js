@@ -1,10 +1,51 @@
-var imcLabel = function(imc) {
-  if (imc < 18.5) return 'Magreza';
-  if (imc < 24.9) return 'Normal';
-  if (imc < 30) return 'Sobrepeso';
-  if (imc >= 30) return 'Obesidade';
-  return 'N/A';
+function createRequest() {
+  var request = null;
+  try {
+    request = new XMLHttpRequest();
+  } catch (tryMS) {
+    try {
+      request = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch (otherMS) {
+      try {
+      request = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (failed) {
+        console.log('no way to create XMLHttpRequest object');
+      }
+    }
+  }
+
+  return request;
 }
+
+function handleImcCalculateResponse(evt) {
+  console.log(evt);
+  if (evt.currentTarget.readyState == 4) {
+    if (evt.currentTarget.status == 200) {
+      console.log(evt.currentTarget.responseText);
+      var obj = JSON.parse(evt.currentTarget.responseText);
+      document.querySelector('#imc').innerHTML = obj.imc + ' ' + obj.imcDescription;
+    } else {
+      console.log('Ooops...');
+    }
+  } else {
+    console.log(evt.currentTarget.readyState);
+    console.log('pending');
+  }
+}
+
+function calculateImcFromAPI(person) {
+  var url = 'http://localhost:8080';
+  var path = '/imc/calculate';
+
+  var request = createRequest();
+  request.onreadystatechange = handleImcCalculateResponse;
+  request.open('POST', url+path, true);
+  request.setRequestHeader("Content-Type", "application/json");
+  console.log(JSON.stringify(person));
+  request.send(JSON.stringify(person));
+}
+
+
 
 function Speaker() {
   this.speech = function(txt) {
@@ -17,14 +58,14 @@ function Person(height, weight) {
   this.height = height;
   this.weight = weight;
   this.imc = -1;
+  this.imcDescription = 'N/A';
 }
 
 function Dietician(height, weight) {
   Person.call(this, height, weight);
   console.log('Creating Dietician...;');
   this.calculateImc = function() {
-    this.imc = (this.weight / (this.height ** 2));
-    this.speech(`${this.imc} ${imcLabel(this.imc)}`);
+    calculateImcFromAPI(this);
   }
 }
 
@@ -32,7 +73,6 @@ Person.prototype = Object.create(Speaker.prototype);
 Person.prototype.constructor = Person;
 Dietician.prototype = Object.create(Person.prototype);
 Dietician.prototype.constructor = Dietician;
-Speaker.prototype.sayHey = function() { alert('Hey') };
 
 function calculateImc(evt) {
   var heightElem = document.querySelector('#altura');
@@ -46,19 +86,11 @@ function calculateImc(evt) {
 
   var dietician = new Dietician(parseFloat(height), parseFloat(weight));
   dietician.calculateImc();
-  dietician.sayHey();
 }
 
 window.onload = function(evt) {
   console.log(evt);
   var btn = document.querySelector('.data .form button');
   
-  btn.addEventListener('click', test);
   btn.addEventListener('click', calculateImc);
 };
-
-function test(evt){ 
-  console.log(evt);
-  console.log('oi test');
-
-}
