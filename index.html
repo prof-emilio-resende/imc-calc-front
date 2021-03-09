@@ -9,6 +9,9 @@
       <div class="data">
         <div class="form">
           <div class="row">
+            <div id="imc-table"></div>
+          </div>
+          <div class="row">
             <label>Altura</label>
             <input id="altura" value="0.00" placeholder="0.00" />
           </div>
@@ -20,8 +23,7 @@
         </div>
       </div>
       <hr />
-      <ImcView />
-      <div class="data">Seu IMC &eacute; <span id="imc">SPAN</span></div>
+      <div class="data">Seu IMC &eacute; <div id="imc-view"></div></div>
     </div>
   </body>
 
@@ -29,5 +31,8 @@
   <script lang="text/javascript" src="domain/Person.js"></script>
   <script lang="text/javascript" src="services/ImcService.js"></script>
   <script lang="text/javascript" src="controller/ImcController.js"></script>
+  <script lang="text/javascript" src="framework/ViewComponent.js"></script>
+  <script lang="text/javascript" src="views/ImcView.js"></script>
+  <script lang="text/javascript" src="views/ImcTableView.js"></script>
   <script lang="text/javascript" src="index.js"></script>
 </html>

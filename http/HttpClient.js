@@ -11,4 +11,16 @@ class HttpClient {
     return fetch(`${hostname}${path}`, opt)
         .then(res => res.json());
   }
+
+  static get(hostname, path) {
+    var opt = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    };
+
+    return fetch(`${hostname}${path}`, opt)
+        .then(res => res.json());
+  }
 }

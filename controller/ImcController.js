@@ -4,10 +4,10 @@ class ImcController {
     }
 
     async calculateImc(person) {
-        var response = await this.service.calculate(person);
-        
-        document
-            .querySelector("#imc")
-            .innerHTML = `<strong>${response.imc} - ${response.imcDescription}</strong>`;
+        return await this.service.calculate(person);
+    }
+
+    async getImcTable() {
+        return await this.service.getImcTable();
     }
 }
