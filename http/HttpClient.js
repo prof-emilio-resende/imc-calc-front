@@ -1,4 +1,4 @@
-class HttpClient {
+export default class HttpClient {
   static post(hostname, path, obj) {
     var opt = {
       method: "POST",

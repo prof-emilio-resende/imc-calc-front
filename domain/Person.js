@@ -1,4 +1,4 @@
-class Person {
+export default class Person {
   constructor(height, weight) {
     this.height = height;
     this.weight = weight;
@@ -35,5 +35,15 @@ class Person {
       height: this._height,
       weight: this._weight
     }
+  }
+
+  isValid() {
+    return this.height && this.weight;
+  }
+
+  equals(other) {
+    if (!other) return false;
+    return this.weight === other.weight &&
+      this.height === other.height;
   }
 }

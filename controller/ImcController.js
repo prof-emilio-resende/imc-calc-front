@@ -1,4 +1,6 @@
-class ImcController {
+import ImcService from '../services/ImcService.js';
+
+export default class ImcController {
     constructor() {
         this.service = new ImcService();
     }

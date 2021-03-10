@@ -1,4 +1,7 @@
-class ImcTableView extends ViewComponent {
+import ViewComponent from '../framework/ViewComponent.js';
+import ImcController from '../controller/ImcController.js';
+
+export default class ImcTableView extends ViewComponent {
   constructor() {
     super(document.getElementById("imc-table"), new ImcController(), { data: [] })
     

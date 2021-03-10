@@ -1,21 +1,29 @@
-var imcView = new ImcView();
-var imcTableView = new ImcTableView();
+import ImcView from "./views/ImcView.js";
+import ImcTableView from "./views/ImcTableView.js";
+import Person from "./domain/Person.js";
 
-function calculateImc(evt) {
-  var heightElem = document.querySelector("#altura");
-  var weightElem = document.querySelector("#peso");
+function buildCalculateImc(imcView) {
 
-  if (!heightElem) throw Error("height is required field!");
-  if (!weightElem) throw Error("weight is required field!");
+  const person = imcView.observe('person', new Person());
 
-  var height = heightElem.value;
-  var weight = weightElem.value;
+  return function (evt) {
+    const heightElem = document.querySelector("#altura");
+    const weightElem = document.querySelector("#peso");
 
-  var person = new Person(parseFloat(height), parseFloat(weight));
-  imcView.update(person);
+    if (!heightElem) throw Error("height is required field!");
+    if (!weightElem) throw Error("weight is required field!");
+
+    person.height = parseFloat(heightElem.value);
+    person.weight = parseFloat(weightElem.value);
+  };
 }
 
-window.onload = function (evt) {
-  var btn = document.querySelector(".data .form button");
-  btn.addEventListener("click", calculateImc);
-};
+function init(evt) {
+  const imcView = new ImcView();
+  new ImcTableView();
+
+  const btn = document.querySelector(".data .form button");
+  btn.addEventListener("click", buildCalculateImc(imcView));
+}
+
+window.onload = init;
