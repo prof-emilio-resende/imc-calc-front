@@ -1,3 +1,5 @@
+@import 'themes.scss';
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
   .container {
@@ -44,12 +46,12 @@
 .data .form button {
   margin-top: 2em;
   display: inline;
-  background-color: #3B64CE;
-  border: 1px solid #3B64CE;
+  border: 1px solid;
   color: #FFF;
   min-width: 50px;
   text-align: center;
   box-shadow: 2px 2px 2px #000000;
+  @include blue-theme(false);
 }
 
 .data .form button:hover {

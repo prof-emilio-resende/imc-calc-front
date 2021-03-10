@@ -1,0 +1,12 @@
+$blue: #3b64ce;
+$green: #006422;
+
+@mixin blue-theme($blue-theme: true) {
+  @if $blue-theme {
+    background-color: $blue;
+    border: $blue;
+  } @else {
+    background-color: $green;
+    border: $green;
+  }
+}

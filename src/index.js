@@ -2,6 +2,8 @@ import ImcView from "./views/ImcView.js";
 import ImcTableView from "./views/ImcTableView.js";
 import Person from "./domain/Person.js";
 
+import './index.scss';
+
 function buildCalculateImc(imcView) {
 
   const person = imcView.observe('person', new Person());
