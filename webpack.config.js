@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const config = {
   entry: "./src/index.js",
+  target: ["web", "es5"],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
@@ -20,6 +21,10 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {}
+        }
       },
       {
         test: /\.[sa]css$/,

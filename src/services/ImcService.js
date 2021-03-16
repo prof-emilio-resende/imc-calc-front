@@ -1,12 +1,12 @@
-import HttpClient from '../http/HttpClient.js';
-
 export default class ImcService {
   constructor() {
     this.hostname = "http://localhost:8080";
   }
 
-  calculate(person) {
+  async calculate(person) {
     var path = "/imc/calculate";
+
+    const { default: HttpClient } = await import('../http/HttpClient.js');
 
     return HttpClient.post(this.hostname, path, person.toObject()).then(
       (rawObj) => {
@@ -20,8 +20,10 @@ export default class ImcService {
     );
   }
 
-  getImcTable() {
+  async getImcTable() {
     var path = "/imc/table";
+
+    const { default: HttpClient } = await import('../http/HttpClient.js');
 
     return HttpClient.get(this.hostname, path)
       .then((rawObj) =>

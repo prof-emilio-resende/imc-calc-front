@@ -1,3 +1,8 @@
+import 'whatwg-fetch'; //polyfill for fetch API
+import ProxyPolyfillBuilder from 'proxy-polyfill/src/proxy'; //polyfill for Proxy
+// polyfill Proxy in the whole app
+window.Proxy = ProxyPolyfillBuilder();
+
 import ImcView from "./views/ImcView.js";
 import ImcTableView from "./views/ImcTableView.js";
 import Person from "./domain/Person.js";
