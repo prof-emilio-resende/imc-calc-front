@@ -3,34 +3,90 @@ import ProxyPolyfillBuilder from 'proxy-polyfill/src/proxy'; //polyfill for Prox
 // polyfill Proxy in the whole app
 window.Proxy = ProxyPolyfillBuilder();
 
-import ImcView from "./views/ImcView.js";
-import ImcTableView from "./views/ImcTableView.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import Person from "./domain/Person.js";
+import ImcView from './views/ImcView.jsx';
 
 import './index.scss';
 
-function buildCalculateImc(imcView) {
+class App extends React.Component {
+  constructor() {
+    super();
 
-  const person = imcView.observe('person', new Person());
+    const personObserved = this.observe(new Person());
 
-  return function (evt) {
+    this.state = {
+      personObserved,
+      person: {}
+    }
+
+  }
+
+  observe(obj) {
+    const self = this;
+    if (obj) {
+      return new Proxy(obj, {
+        set(target, prop, value, receiver) {
+          const updated = Reflect.set(target, prop, value);
+          console.log(`updated ${updated}`);
+          if (target.isValid()) {
+            console.log("triggering update to the view");
+            self.setState({ person: target });
+          } else {
+            console.log("object not valid yet, skiping update on view...");
+          }
+
+          return true;
+        },
+      });
+    }
+
+    return obj;
+  }
+
+  calculateImc() {
     const heightElem = document.querySelector("#altura");
     const weightElem = document.querySelector("#peso");
 
     if (!heightElem) throw Error("height is required field!");
     if (!weightElem) throw Error("weight is required field!");
 
+    const {personObserved: person} = this.state;
+
     person.height = parseFloat(heightElem.value);
     person.weight = parseFloat(weightElem.value);
-  };
+  }
+
+  render() {
+    console.log('react rendering ...');
+
+    return (<div>
+      <div className="data">
+        <div className="form">
+          <div className="row">
+            <div id="imc-table">pending ImcTableView React</div>
+          </div>
+          <div className="row">
+            <label>Altura</label>
+            <input id="altura" placeholder="0.00" />
+          </div>
+          <div className="row">
+            <label>Peso</label>
+            <input id="peso" placeholder="0.00" />
+          </div>
+          <button type="button" className="action" onClick={this.calculateImc.bind(this)}>Calcular</button>
+        </div>
+      </div>
+      <hr />
+      <div className="data">Seu IMC &eacute; <ImcView person={this.state.person} /></div>
+    </div>);
+  }
 }
 
 function init(evt) {
-  const imcView = new ImcView();
-  new ImcTableView();
-
-  const btn = document.querySelector(".data .form button");
-  btn.addEventListener("click", buildCalculateImc(imcView));
+  ReactDOM.render(<App />, document.getElementById('app'));
 }
 
 window.onload = init;
