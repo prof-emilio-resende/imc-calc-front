@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 
 import Person from "./domain/Person.js";
 import ImcView from './views/ImcView.jsx';
+import ImcTableView from './views/ImcTableView.jsx';
 
 import './index.scss';
 
@@ -66,7 +67,7 @@ class App extends React.Component {
       <div className="data">
         <div className="form">
           <div className="row">
-            <div id="imc-table">pending ImcTableView React</div>
+            <ImcTableView />
           </div>
           <div className="row">
             <label>Altura</label>
