@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 export default class ViewComponent {
   constructor(element, controller, initialState = {}) {
     if (!element) throw Error("No DOM element to bind!");
@@ -7,7 +10,10 @@ export default class ViewComponent {
   }
 
   paint() {
-    this.element.innerHTML = this.render();
+    const el = React.createElement('div', {id: 'view-component'}, this.render());
+    console.log(el);
+
+    ReactDOM.render(el, this.element);
   }
 
   async setState(newState) {
